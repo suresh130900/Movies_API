@@ -44,7 +44,7 @@ class _homeState extends State<home> with SingleTickerProviderStateMixin {
         selectedItemColor: Colors.white,
         selectedFontSize: 14,
         backgroundColor: Colors.black,
-        items: [
+        items: const [
           BottomNavigationBarItem(
             backgroundColor: Colors.black,
             icon: Icon(
@@ -72,7 +72,7 @@ class _homeState extends State<home> with SingleTickerProviderStateMixin {
       ),
       body: IndexedStack(
         index: index,
-        children: [
+        children: const [
             HomeInner(),
             Search(),
             Profile(),

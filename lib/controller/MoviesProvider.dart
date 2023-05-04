@@ -8,14 +8,16 @@ import 'package:movie_api/config/Api.dart';
 class MoviesProvider extends GetxController{
 
   static const String imagePathPrefix = 'https://image.tmdb.org/t/p/w500/';
+  RxString imagePath = "https://image.tmdb.org/t/p/w500/".obs;
 
   RxList<MovieModel> movies = <MovieModel>[].obs;
    Future fetchMovies() async{
     final Response = await http.get(Uri.parse(Api.base_api));
+
+    print("Printing from controler");
     print(Response.body);
     if(Response.statusCode == 200)
       {
-
         List<MovieModel> movies_fetched =
         (jsonDecode(Response.body)["results"] as List)
             .map((data) => MovieModel.fromJson(data))
