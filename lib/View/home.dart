@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:movie_api/View/HomeInner.dart';
 import 'package:movie_api/View/Profile.dart';
 import 'package:movie_api/View/Search.dart';
+import 'package:movie_api/controller/MoviesProvider.dart';
 
 class home extends StatefulWidget {
   const home({Key? key}) : super(key: key);
@@ -12,11 +14,16 @@ class home extends StatefulWidget {
 
 class _homeState extends State<home> with SingleTickerProviderStateMixin {
   late AnimationController _controller;
+  MoviesProvider movies = Get.put(MoviesProvider());
   int index = 0;
 
   @override
   void initState() {
     super.initState();
+    //movies.fetchMovies();
+    movies.getLatestMovies();
+    setState(() {
+    });
     _controller = AnimationController(vsync: this);
   }
 
@@ -74,8 +81,12 @@ class _homeState extends State<home> with SingleTickerProviderStateMixin {
         index: index,
         children: const [
             HomeInner(),
-            Search(),
-            Profile(),
+            Center(
+                child: Search()
+            ),
+            Center(
+                child: Profile()
+            ),
         ],
       ),
     );
