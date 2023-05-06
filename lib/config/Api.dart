@@ -13,5 +13,6 @@ class Api{
   static String upcoming = "https://api.themoviedb.org/3/movie/upcoming?api_key=$apiKey&language=en-US";
   //trending Movies
   static String trending = "https://api.themoviedb.org/3/trending/all/day?api_key=$apiKey";
-
+  //API endpoint for popular tv shows
+  static String tv_popular = "https://api.themoviedb.org/3/tv/popular?api_key=$apiKey&language=en-US"; 
 }

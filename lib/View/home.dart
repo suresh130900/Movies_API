@@ -5,6 +5,7 @@ import 'package:movie_api/View/Movies.dart';
 import 'package:movie_api/View/Search.dart';
 import 'package:movie_api/View/TvShows.dart';
 import 'package:movie_api/controller/MoviesProvider.dart';
+import 'package:movie_api/controller/TvProvider.dart';
 
 class home extends StatefulWidget {
   const home({Key? key}) : super(key: key);
@@ -16,6 +17,8 @@ class home extends StatefulWidget {
 class _homeState extends State<home> with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   MoviesProvider movies = Get.put(MoviesProvider());
+  TvProvider tv = Get.put(TvProvider());
+
   int index = 0;
 
   @override
@@ -23,6 +26,7 @@ class _homeState extends State<home> with SingleTickerProviderStateMixin {
     super.initState();
     movies.getLatestMovies();
     movies.getTopRated();
+    tv.getPopularTv();
     setState(() {
     });
     _controller = AnimationController(vsync: this);

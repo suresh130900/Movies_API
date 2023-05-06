@@ -16,22 +16,9 @@ class _HomeInnerState extends State<HomeInner> with SingleTickerProviderStateMix
   MoviesProvider movies = Get.put(MoviesProvider());
 
   //Making list of movies
-  List<MovieModel> popular_movies = <MovieModel>[];
+
   List<MovieModel> upcomingMovies = <MovieModel>[];
   List<MovieModel> trendingMovies = <MovieModel>[];
-
-
-  //fetch the current movies
-  fetchMovies() async {
-    var data = await MoviesProvider.getMovies();
-
-    setState(() {
-      List<dynamic> results = data['results'];
-      results.forEach((element) {
-        popular_movies.add(MovieModel.fromJson(element));
-      });
-    });
-  }
 
   //function of the upcoming movies
   upcoming_movies() async{
@@ -64,7 +51,6 @@ class _HomeInnerState extends State<HomeInner> with SingleTickerProviderStateMix
   void initState() {
     super.initState();
     //calling all the functions
-    fetchMovies();
     upcoming_movies();
     trending_movies();
     print(trendingMovies);
@@ -179,7 +165,7 @@ class _HomeInnerState extends State<HomeInner> with SingleTickerProviderStateMix
                       child: ListView.builder(
                         scrollDirection: Axis.horizontal,
                         //itemCount: movies.movies.length,
-                          itemCount: popular_movies.length,
+                          itemCount: movies.latest_movies.length,
                           shrinkWrap: true,
                           itemBuilder: (BuildContext context, int index) {
                           return Padding(
@@ -195,47 +181,47 @@ class _HomeInnerState extends State<HomeInner> with SingleTickerProviderStateMix
                   ],
                 ),
               ),
+              // Padding(
+              //   padding: const EdgeInsets.all(8.0),
+              //   child: Column(
+              //     mainAxisAlignment: MainAxisAlignment.start,
+              //     crossAxisAlignment: CrossAxisAlignment.start,
+              //     children: [
+              //       Text("Top Rated",
+              //         style: TextStyle(
+              //             color: Colors.white,
+              //             fontWeight: FontWeight.bold,
+              //             fontSize: 20,
+              //         ),
+              //       ),
+              //       Container(
+              //         height: 230,
+              //         child: ListView.builder(
+              //             scrollDirection: Axis.horizontal,
+              //             itemCount: movies.top_rated.length,
+              //             shrinkWrap: true,
+              //             itemBuilder: (BuildContext context, int index) {
+              //               return Padding(
+              //                 padding: const EdgeInsets.all(6.0),
+              //                 child: Container(
+              //                   child: Image(
+              //                     image: NetworkImage(movies.imagePath+movies.top_rated[index].posterPath!),
+              //                   ),
+              //                 ),
+              //               );
+              //             },
+              //         ),
+              //       )
+              //     ],
+              //   ),
+              // ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text("Top Rated",
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20,
-                      ),
-                    ),
-                    Container(
-                      height: 230,
-                      child: ListView.builder(
-                          scrollDirection: Axis.horizontal,
-                          itemCount: movies.top_rated.length,
-                          shrinkWrap: true,
-                          itemBuilder: (BuildContext context, int index) {
-                            return Padding(
-                              padding: const EdgeInsets.all(6.0),
-                              child: Container(
-                                child: Image(
-                                  image: NetworkImage(movies.imagePath+movies.top_rated[index].posterPath!),
-                                ),
-                              ),
-                            );
-                          },
-                      ),
-                    )
-                  ],
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text("Upcoming",
+                    Text("Upcoming Movies",
                       style: TextStyle(
                           color: Colors.white,
                           fontSize: 20,

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:movie_api/controller/TvProvider.dart';
 
 class TvShows extends StatefulWidget {
   const TvShows({Key? key}) : super(key: key);
@@ -9,6 +11,7 @@ class TvShows extends StatefulWidget {
 
 class _TvShowsState extends State<TvShows> with SingleTickerProviderStateMixin {
   late AnimationController _controller;
+  TvProvider tv = Get.put(TvProvider());
 
   @override
   void initState() {
@@ -24,6 +27,15 @@ class _TvShowsState extends State<TvShows> with SingleTickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Scaffold(
+      backgroundColor: Colors.black,
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Obx(() => Image(image: NetworkImage(tv.imagePath+tv.popular_tv[1].posterPath!))),
+          ],
+        ),
+      ),
+    );
   }
 }
