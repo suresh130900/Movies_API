@@ -12,9 +12,16 @@ class HomeInner extends StatefulWidget {
 
 class _HomeInnerState extends State<HomeInner> with SingleTickerProviderStateMixin {
   late AnimationController _controller;
+  //creating object of the controller
   MoviesProvider movies = Get.put(MoviesProvider());
-  List<MovieModel> popular_movies = <MovieModel>[];
 
+  //Making list of movies
+  List<MovieModel> popular_movies = <MovieModel>[];
+  List<MovieModel> upcomingMovies = <MovieModel>[];
+  List<MovieModel> trendingMovies = <MovieModel>[];
+
+
+  //fetch the current movies
   fetchMovies() async {
     var data = await MoviesProvider.getMovies();
 
@@ -26,10 +33,41 @@ class _HomeInnerState extends State<HomeInner> with SingleTickerProviderStateMix
     });
   }
 
+  //function of the upcoming movies
+  upcoming_movies() async{
+    //calling the function and storing the response in data
+    var data = await MoviesProvider.getUpcomingMovies();
+
+    //setting state
+    setState(() {
+      //making a list
+      List<dynamic> results = data['results'];
+      results.forEach((element) {
+        upcomingMovies.add(MovieModel.fromJson(element));
+      });
+    });
+  }
+
+  //function of trending Movies
+  trending_movies() async{
+    var data = await MoviesProvider.getTrending();
+
+    setState(() {
+      List<dynamic> results = data['results'];
+      results.forEach((element) {
+        trendingMovies.add(MovieModel.fromJson(element));
+      });
+    });
+  }
+
   @override
   void initState() {
     super.initState();
+    //calling all the functions
     fetchMovies();
+    upcoming_movies();
+    trending_movies();
+    print(trendingMovies);
     _controller = AnimationController(vsync: this);
   }
 
@@ -62,7 +100,7 @@ class _HomeInnerState extends State<HomeInner> with SingleTickerProviderStateMix
                         width: MediaQuery.of(context).size.width,
                         child: ListView.builder(
                           // itemCount: movies.movies.length,
-                          itemCount: popular_movies.length,
+                          itemCount: trendingMovies.length,
                             shrinkWrap: true,
                             scrollDirection: Axis.horizontal,
                             itemBuilder: (BuildContext context, int index) {
@@ -71,7 +109,7 @@ class _HomeInnerState extends State<HomeInner> with SingleTickerProviderStateMix
                               child: Image(
                                 width: MediaQuery.of(context).size.width,
                                 fit: BoxFit.fill,
-                                  image: NetworkImage(movies.imagePath + popular_movies[index].posterPath!),
+                                  image: NetworkImage(movies.imagePath + trendingMovies[index].posterPath!),
                                   //image: NetworkImage(movies.imagePath+movies.movies[index].posterPath!),
                               ),
                             );
@@ -129,7 +167,7 @@ class _HomeInnerState extends State<HomeInner> with SingleTickerProviderStateMix
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text("Popular Movies",
+                    Text("Now Playing",
                     style: TextStyle(
                         color: Colors.white,
                       fontSize: 20,
@@ -137,7 +175,7 @@ class _HomeInnerState extends State<HomeInner> with SingleTickerProviderStateMix
                       ),
                     ),
                     Container(
-                      height: 200,
+                      height: 230,
                       child: ListView.builder(
                         scrollDirection: Axis.horizontal,
                         //itemCount: movies.movies.length,
@@ -149,6 +187,73 @@ class _HomeInnerState extends State<HomeInner> with SingleTickerProviderStateMix
                             child: Container(
                               child: Image(
                                 image: NetworkImage(movies.imagePath+movies.latest_movies[index].posterPath!),
+                              ),
+                            ),
+                          );
+                      }),
+                    ),
+                  ],
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text("Top Rated",
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20,
+                      ),
+                    ),
+                    Container(
+                      height: 230,
+                      child: ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: movies.top_rated.length,
+                          shrinkWrap: true,
+                          itemBuilder: (BuildContext context, int index) {
+                            return Padding(
+                              padding: const EdgeInsets.all(6.0),
+                              child: Container(
+                                child: Image(
+                                  image: NetworkImage(movies.imagePath+movies.top_rated[index].posterPath!),
+                                ),
+                              ),
+                            );
+                          },
+                      ),
+                    )
+                  ],
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text("Upcoming",
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold
+                      ),
+                    ),
+                    Container(
+                      height: 230,
+                      child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: upcomingMovies.length,
+                          shrinkWrap: true,
+                          itemBuilder: (BuildContext context, int index) {
+                          return Padding(
+                            padding: const EdgeInsets.all(6.0),
+                            child: Container(
+                              child: Image(
+                                image: NetworkImage(movies.imagePath + upcomingMovies[index].posterPath!),
                               ),
                             ),
                           );

@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class Profile extends StatefulWidget {
-  const Profile({Key? key}) : super(key: key);
+class Movies extends StatefulWidget {
+  const Movies({Key? key}) : super(key: key);
 
   @override
-  State<Profile> createState() => _ProfileState();
+  State<Movies> createState() => _MoviesState();
 }
 
-class _ProfileState extends State<Profile> with SingleTickerProviderStateMixin {
+class _MoviesState extends State<Movies> with SingleTickerProviderStateMixin {
   late AnimationController _controller;
 
   @override

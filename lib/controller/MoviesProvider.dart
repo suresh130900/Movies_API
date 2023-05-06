@@ -12,6 +12,9 @@ class MoviesProvider extends GetxController{
 
   //RxList<MovieModel> movies = <MovieModel>[].obs;
   RxList<MovieModel> latest_movies = <MovieModel>[].obs;
+  RxList<MovieModel> top_rated = <MovieModel>[].obs;
+  RxList<MovieModel> upcoming_movies = <MovieModel>[].obs;
+  RxList<MovieModel> trending_movies = <MovieModel>[].obs;
 
   static Future<Map> getMovies() async
   {
@@ -48,5 +51,53 @@ class MoviesProvider extends GetxController{
      else{
        throw Exception("Failed to load Latest Movies");
      }
+  }
+
+  Future getTopRated() async{
+    final top_rated_movies = await http.get(Uri.parse(Api.top_rated));
+    if(top_rated_movies.statusCode == 200)
+      {
+        print("TOP Rated Movies");
+        print(top_rated_movies.body);
+        List<MovieModel> top_rated_list =
+        (jsonDecode(top_rated_movies.body)['results'] as List)
+            .map((data) => MovieModel.fromJson(data))
+            .toList();
+
+        top_rated.value = top_rated_list;
+      }
+    else{
+      throw Exception("Failed to load Top rated movies");
+    }
+  }
+
+  static Future<Map> getUpcomingMovies() async{
+    final upcoming_movies_response = await http.get(Uri.parse(Api.upcoming));
+    if(upcoming_movies_response.statusCode == 200)
+      {
+        return jsonDecode(upcoming_movies_response.body);
+        // List<MovieModel> upcoming_list =
+        // (jsonDecode(upcoming_movies_response.body)['results'] as List)
+        //     .map((data) => MovieModel.fromJson(data))
+        //     .toList();
+        //
+        // upcoming_movies.value = upcoming_list;
+      }
+    else{
+      throw Exception("Failed to Load Upcoming Movies");
+    }
+  }
+
+  static Future<Map> getTrending() async{
+    final trending_response = await http.get(Uri.parse(Api.trending));
+
+    if(trending_response.statusCode == 200)
+      {
+        return jsonDecode(trending_response.body);
+      }
+    else
+      {
+        throw Exception("Failed to Load Trending Movies");
+      }
   }
 }

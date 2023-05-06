@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:movie_api/View/HomeInner.dart';
-import 'package:movie_api/View/Profile.dart';
+import 'package:movie_api/View/Movies.dart';
 import 'package:movie_api/View/Search.dart';
+import 'package:movie_api/View/TvShows.dart';
 import 'package:movie_api/controller/MoviesProvider.dart';
 
 class home extends StatefulWidget {
@@ -20,8 +21,8 @@ class _homeState extends State<home> with SingleTickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
-    //movies.fetchMovies();
     movies.getLatestMovies();
+    movies.getTopRated();
     setState(() {
     });
     _controller = AnimationController(vsync: this);
@@ -38,7 +39,6 @@ class _homeState extends State<home> with SingleTickerProviderStateMixin {
     return Scaffold(
       backgroundColor: Colors.black,
       bottomNavigationBar: BottomNavigationBar(
-
         //to change the page dynamically
         currentIndex: index,
         onTap: (i) {
@@ -50,7 +50,9 @@ class _homeState extends State<home> with SingleTickerProviderStateMixin {
         unselectedFontSize: 14,
         selectedItemColor: Colors.white,
         selectedFontSize: 14,
-        backgroundColor: Colors.black,
+        unselectedLabelStyle: TextStyle(color: Colors.white),
+        selectedLabelStyle: TextStyle(color: Colors.white),
+        //backgroundColor: Colors.black,
         items: const [
           BottomNavigationBarItem(
             backgroundColor: Colors.black,
@@ -63,18 +65,26 @@ class _homeState extends State<home> with SingleTickerProviderStateMixin {
           ),
           BottomNavigationBarItem(
               icon: Icon(
-                  Icons.search,
+                  Icons.movie,
                 size: 30,
                 color: Colors.white,
               ),
-              label: "Search"),
+              label: "Movies"),
           BottomNavigationBarItem(
               icon: Icon(
-                  Icons.person,
+                  Icons.tv,
                 size: 30,
                 color: Colors.white,
               ),
-              label: "Profile"),
+              label: "TV Shows"),
+          BottomNavigationBarItem(
+              icon: Icon(
+                  Icons.search,
+              size: 30,
+              color: Colors.white,
+              ),
+            label: "Search"
+          ),
         ],
       ),
       body: IndexedStack(
@@ -82,11 +92,14 @@ class _homeState extends State<home> with SingleTickerProviderStateMixin {
         children: const [
             HomeInner(),
             Center(
-                child: Search()
+                child: Movies()
             ),
             Center(
-                child: Profile()
+                child: TvShows()
             ),
+          Center(
+            child: Search(),
+          )
         ],
       ),
     );
