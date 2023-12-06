@@ -60,6 +60,9 @@ class _MoviesState extends State<Movies> with SingleTickerProviderStateMixin {
                     Positioned(
                       child: Container(
                         height: 540,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.all(Radius.circular(200))
+                        ),
                         width: MediaQuery.of(context).size.width,
                         child: ListView.builder(
                           itemCount: popular_movies.length,

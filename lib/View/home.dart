@@ -4,6 +4,7 @@ import 'package:movie_api/View/HomeInner.dart';
 import 'package:movie_api/View/Movies.dart';
 import 'package:movie_api/View/Search.dart';
 import 'package:movie_api/View/TvShows.dart';
+
 import 'package:movie_api/controller/MoviesProvider.dart';
 import 'package:movie_api/controller/TvProvider.dart';
 

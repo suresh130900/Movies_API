@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import 'View/home.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const GetMaterialApp(
+    debugShowCheckedModeBanner: false,
+    home: home(),
+  ));
 }
 
 class MyApp extends StatelessWidget {

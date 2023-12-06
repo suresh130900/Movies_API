@@ -4,7 +4,7 @@ class Api{
   static String apiKey = "1ebb48a64c8759bbe9ce69262bb88286";
 
   //latest popular
-  static String base_api = "https://api.themoviedb.org/3/movie/popular?api_key=1ebb48a64c8759bbe9ce69262bb88286&language=en-US&page=1";
+  static String base_api = "https://api.themoviedb.org/3/movie/popular?api_key=$apiKey&language=en-US&page=1";
   //latest movies
   static String latest = "https://api.themoviedb.org/3/movie/now_playing?api_key=$apiKey&language=en-US&";
   //Top rated API Endpoint

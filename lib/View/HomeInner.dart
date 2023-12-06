@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:movie_api/View/MovieDetails.dart';
 import 'package:movie_api/controller/MoviesProvider.dart';
 import 'package:movie_api/model/MovieModel.dart';
 
@@ -75,14 +76,24 @@ class _HomeInnerState extends State<HomeInner> with SingleTickerProviderStateMix
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(
+              Container(
                 height: 540,
                 width: MediaQuery.of(context).size.width,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(20),
+                  ),
+                ),
                 child: Stack(
                   children: [
                     Positioned(
                       child: Container(
                         height: 540,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(20),
+                          ),
+                        ),
                         width: MediaQuery.of(context).size.width,
                         child: ListView.builder(
                           // itemCount: movies.movies.length,
@@ -92,11 +103,16 @@ class _HomeInnerState extends State<HomeInner> with SingleTickerProviderStateMix
                             itemBuilder: (BuildContext context, int index) {
                             return Padding(
                               padding: const EdgeInsets.all(8.0),
-                              child: Image(
-                                width: MediaQuery.of(context).size.width,
-                                fit: BoxFit.fill,
-                                  image: NetworkImage(movies.imagePath + trendingMovies[index].posterPath!),
-                                  //image: NetworkImage(movies.imagePath+movies.movies[index].posterPath!),
+                              child: GestureDetector(
+                                onTap: () {
+                                  Get.to(MoviesDetails());
+                                },
+                                child: Image(
+                                  width: MediaQuery.of(context).size.width,
+                                  fit: BoxFit.fill,
+                                    image: NetworkImage(movies.imagePath + trendingMovies[index].posterPath!),
+                                    //image: NetworkImage(movies.imagePath+movies.movies[index].posterPath!),
+                                ),
                               ),
                             );
                         }),
@@ -111,9 +127,14 @@ class _HomeInnerState extends State<HomeInner> with SingleTickerProviderStateMix
                               backgroundColor: Colors.white,
                               onPressed: () {  },
                               label: Row(
-                                children: [
-                                  Icon(
-                                    Icons.play_arrow,
+                                children:  [
+                                  GestureDetector(
+                                    onTap: () {
+                                      Get.snackbar("play", "Cannot Play Because of Copyright");
+                                    },
+                                    child: Icon(
+                                      Icons.play_arrow,
+                                    ),
                                   ),
                                   SizedBox(
                                     width: 3,
@@ -125,14 +146,14 @@ class _HomeInnerState extends State<HomeInner> with SingleTickerProviderStateMix
                                 ],
                               ),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               width: 25,
                             ),
                             ActionChip(
                               backgroundColor: Colors.white,
                                 onPressed: () {},
                                 label: Row(
-                                  children: [
+                                  children: const [
                                     Icon(Icons.info_outline),
                                     SizedBox(
                                       width: 6,
@@ -153,7 +174,7 @@ class _HomeInnerState extends State<HomeInner> with SingleTickerProviderStateMix
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text("Now Playing",
+                    const Text("Now Playing",
                     style: TextStyle(
                         color: Colors.white,
                       fontSize: 20,
@@ -171,12 +192,21 @@ class _HomeInnerState extends State<HomeInner> with SingleTickerProviderStateMix
                           return Padding(
                             padding: const EdgeInsets.all(6.0),
                             child: Container(
-                              child: Image(
-                                image: NetworkImage(movies.imagePath+movies.latest_movies[index].posterPath!),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.all(Radius.circular(20))
+                              ),
+                              child: GestureDetector(
+                                onTap: () {
+                                  Get.to(MoviesDetails());
+                                },
+                                child: Image(
+                                  image: NetworkImage(movies.imagePath+movies.latest_movies[index].posterPath!),
+                                ),
                               ),
                             ),
                           );
-                      }),
+                        },
+                      ),
                     ),
                   ],
                 ),
@@ -221,7 +251,7 @@ class _HomeInnerState extends State<HomeInner> with SingleTickerProviderStateMix
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text("Upcoming Movies",
+                    const Text("Upcoming Movies hpihsdbishdviuhsiusi",
                       style: TextStyle(
                           color: Colors.white,
                           fontSize: 20,
@@ -238,12 +268,18 @@ class _HomeInnerState extends State<HomeInner> with SingleTickerProviderStateMix
                           return Padding(
                             padding: const EdgeInsets.all(6.0),
                             child: Container(
-                              child: Image(
-                                image: NetworkImage(movies.imagePath + upcomingMovies[index].posterPath!),
+                              child: GestureDetector(
+                                onTap: () {
+                                  Get.to(MoviesDetails());
+                                },
+                                child: Image(
+                                  image: NetworkImage(movies.imagePath + upcomingMovies[index].posterPath!),
+                                ),
                               ),
                             ),
                           );
-                      }),
+                        },
+                      ),
                     )
                   ],
                 ),
