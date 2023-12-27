@@ -251,7 +251,7 @@ class _HomeInnerState extends State<HomeInner> with SingleTickerProviderStateMix
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text("Upcoming Movies hpihsdbishdviuhsiusi",
+                    const Text("Upcoming Movies",
                       style: TextStyle(
                           color: Colors.white,
                           fontSize: 20,
